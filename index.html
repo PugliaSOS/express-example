@@ -1,0 +1,40 @@
+<script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+<script>
+    function refresh() {
+        $.get('/api').then(function(data) {
+            $('.results').html('');
+            data.forEach(function(a) {
+                $('.results').append('<p>' + a.name + '</p>')
+            })
+        });
+    }
+
+    refresh();
+
+    $(document).ready(function() {
+        $('#ram-filter').change(function() {
+            $.get('/api?ram=' + $(this).val()).then(function(data) {
+                $('.results').html('');
+                data.forEach(function(a) {
+                    $('.results').append('<p>' + a.name + '</p>')
+                })
+            });
+        });
+
+        $('#insert').click(function() {
+            $.post('/api', {
+                name: $('#new-name').val(),
+                ram: $('#new-ram').val()
+            }, {
+                contentType: 'application/json'
+            }).then(refresh);
+        });
+    });
+</script>
+Questi sono i cellulari disponibili:
+<div class=results></div>
+Ram maggiore o uguale a: <input id="ram-filter">
+<hr>
+Name: <input id="new-name"><br>
+Ram: <input id="new-ram">
+<button type="button" id="insert">Inserisci</button>
