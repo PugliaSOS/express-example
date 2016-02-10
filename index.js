@@ -1,5 +1,7 @@
+// Create express app
 var app = require('express')();
 
+// Middleware to read POST's bodies
 app.use(require('body-parser').json());
 
 arr = [
@@ -17,10 +19,12 @@ arr = [
     }
 ]
 
+// GET / -> index.html
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+// GET /api?ram=int -> arr filtrato per obj.ram >= ram
 app.get('/api', function(req, res) {
     var arr2 = [];
     console.log(req.query);
@@ -38,6 +42,7 @@ app.get('/api', function(req, res) {
     res.json(arr2);
 });
 
+// GET /api/iphone -> {name: 'iphone'...}
 app.get('/api/:name', function(req, res) {
     var found;
     for (var i = 0; i < arr.length; i++) {
@@ -53,6 +58,7 @@ app.get('/api/:name', function(req, res) {
     }
 });
 
+// POST /api -> add object to arr
 app.post('/api', function(req, res){
     var found;
     for (var i = 0; i < arr.length; i++) {
