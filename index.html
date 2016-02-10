@@ -1,8 +1,10 @@
 <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
 <script>
     function refresh() {
+        // $.get(url) = $.ajax({method: 'get', url: url})
         $.get('/api').then(function(data) {
             $('.results').html('');
+            // arr.forEach(function(a) {...}) = for (i = 0; i < arr.length; i++) {var a = arr[i];...}
             data.forEach(function(a) {
                 $('.results').append('<p>' + a.name + '</p>')
             })
@@ -22,6 +24,7 @@
         });
 
         $('#insert').click(function() {
+            // $.post = $.ajax({method: 'post'})
             $.post('/api', {
                 name: $('#new-name').val(),
                 ram: $('#new-ram').val()
